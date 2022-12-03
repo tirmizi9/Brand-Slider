@@ -35,62 +35,7 @@ if ( function_exists( 'add_image_size' ) ) {
 	//300 pixels wide (and unlimited height9999)
     // add_image_size( 'homepage-thumb', 220, 180, true ); //(cropped)
 }
-//add_action( 'add_meta_boxes', 'mjt_brands_meta_box_add' );
-function mjt_brands_meta_box_add()
-{
-    add_meta_box( 'mjt-brands-meta-box-id', 'Brand Details', 'mjt_brands_meta_box_script', 'sst_brands', 'normal', 'high' );
-}
-function mjt_brands_meta_box_script()
-{
-	global $post;
-	$post_id = $post->ID ;
-	$order_id = get_post_meta( $post_id, 'order_id', true);
-	$ordertotal = get_post_meta( $post_id, 'ordertotal', true) ; 
-	$ctmsrid =  get_post_meta($post_id,'customer_id', true ); ?>
-	 <p>
-        <label for="order_id_meta_box_text">Order ID</label>
-        <input type="text" name="order_id" id="order_id_meta_box_text" value="<?php echo $order_id; ?>" />
-    </p>
-	<p>
-        <label for="order_id_meta_box_text">Order Total</label>
-        <input type="text" name="ordertotal" id="ordertotal_meta_box_text" value="<?php echo $ordertotal; ?>" />
-    </p>  
-	
-	<?php 
-	if($order_id){
-		$orderstausm = 'orderstaus_'.$order_id ;
-		$orderstausv = get_post_meta( $post_id, $orderstausm, true); ?>
-	<p>
-        <label for="orderstaus_meta_box_text">Order Staus</label>
-        <input type="text" name="<?php echo $orderstausm ;?>" id="orderstaus_meta_box_text" value="<?php echo $orderstausv; ?>" />
-    </p> 
-	
-	<p>
-        <label for="customer_id_meta_box_text">Customer ID</label>
-        <input type="text" name="customer_id" id="customer_id_meta_box_text" value="<?php echo $ctmsrid ; ?>" />
-    </p>
 
-	<?php }
-	
-}
-//add_action( 'save_post', 'mjt_order_meta_box_save' );
-function mjt_order_meta_box_save( $post_id )
-{
-	if( isset( $_POST['order_id'] ) ) 		
-        update_post_meta( $post_id, 'order_id',  $_POST['order_id']) ;
-	
-	if( isset( $_POST['ordertotal'] ) )
-        update_post_meta( $post_id, 'ordertotal', $_POST['ordertotal']) ; 
-		
-	if( isset( $_POST['customer_id'] ) )
-        update_post_meta( $post_id, 'customer_id', $_POST['customer_id']) ;
-	
-	if( isset( $_POST['order_id'] ) ){
-		$order_id = $_POST['order_id'] ;
-		$orderstaus = 'orderstaus_'.$order_id ;
-        update_post_meta( $post_id, $orderstaus, $_POST[$orderstaus] );
-	}
-}
 add_shortcode('sst_brands_slider','sst_brands_slider_callback');
 function sst_brands_slider_callback($atts ){
 	 ob_start();
@@ -118,7 +63,7 @@ function sst_brands_slider_callback($atts ){
 	}
 $brands = new WP_Query($args);
 if ( $brands->have_posts() ) :  ?> 
-    <div style="padding:220px 0 100px;background:#708aa8; ">
+    <div style="padding:220px 0 100px;background:#00e2ff; ">
         <div id="thumbnail-slider">
             <div class="inner">
                 <ul style="touch-action: pan-y; transition-property: transform; transition-timing-function: cubic-bezier(0.2, 0.88, 0.5, 1);">
